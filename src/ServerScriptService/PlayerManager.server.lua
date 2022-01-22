@@ -15,7 +15,10 @@ local GlobalGold = DataStoreService:GetOrderedDataStore("GlobalGold")
 local SessionData = DataStoreService:GetDataStore("SessionData")
 
 -- game:GetService("DataStoreService"):GetDataStore("SessionData"):RemoveAsync(2707410670)
+-- game:GetService("DataStoreService"):GetOrderedDataStore("GlobalGold"):RemoveAsync(2707410670)
+
 -- game:GetService("DataStoreService"):GetDataStore("SessionData"):RemoveAsync(3138096286)
+-- game:GetService("DataStoreService"):GetOrderedDataStore("GlobalGold"):RemoveAsync(3138096286)
 
 local SessionDataModule = require(ServerScriptService.SessionData)
 local ForceField = require(ServerScriptService.ForceField)
@@ -144,22 +147,14 @@ end
 
 local function saveGlobal(player)
 	local currentGold = player.leaderstats.Gold.Value
-	-- TODO: Fix this so it works as intended.
-	-- local savedGold = player:GetAttribute("SavedGold") or 0
-	-- if currentGold > savedGold then
-	-- 	print([[currentGold > player:GetAttribute("SavedGold")]])
-	-- 	local success, errorMessage = pcall(function()
-	-- 		GlobalGold:SetAsync(player.UserId, currentGold)
-	-- 	end)
-	-- 	if not success then
-	-- 		warn(errorMessage)
-	-- 	end
-	-- end
-	local success, errorMessage = pcall(function()
-		GlobalGold:SetAsync(player.UserId, currentGold)
-	end)
-	if not success then
-		warn(errorMessage)
+	local savedGold = player:GetAttribute("SavedGold") or 0
+	if currentGold > savedGold then
+		local success, errorMessage = pcall(function()
+			GlobalGold:SetAsync(player.UserId, currentGold)
+		end)
+		if not success then
+			warn(errorMessage)
+		end
 	end
 end
 
