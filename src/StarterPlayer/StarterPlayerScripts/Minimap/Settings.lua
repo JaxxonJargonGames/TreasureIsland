@@ -7,16 +7,6 @@ local Settings =
 	{
 		["Tags"] = { --This is where the tags are put. The tagged thing will be displayed on the minimap with the desired settings. You can use a plugin like Tag Editor to give parts tags.
 			{
-				tagName = "BiomeFeature";
-				toolTip = "Feature";
-				iconID = 5254553771;
-				color = Color3.fromRGB(255,255,255);
-				size = UDim2.new(0, 7, 0, 7);
-				snapToBorder = false;
-				rotate = true;
-			};
-			
-			{
 				tagName = "Gold";
 				toolTip = "Gold";
 				iconID = 5254553771;

@@ -28,16 +28,3 @@ local function onPlayerAdded(player)
 	end
 end
 Players.PlayerAdded:Connect(onPlayerAdded)
-
-
--- Example code supplied by Plum.
---for _, player in pairs(Players:GetPlayers()) do
---	player:GetPropertyChangedSignal("Team"):Connect(function()
---		if player.Character == nil then return end
---		if player.Team == Players.LocalPlayer.Team then
---			CollectionService:AddTag(player.Character:WaitForChild("HumanoidRootPart"), "TeamMember")
---		else
---			CollectionService:RemoveTag(player.Character:WaitForChild("HumanoidRootPart"), "TeamMember")
---		end
---	end
---end

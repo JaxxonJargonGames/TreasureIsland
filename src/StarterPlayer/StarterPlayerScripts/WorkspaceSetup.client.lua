@@ -5,17 +5,9 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local SoundService = game:GetService("SoundService")
 local Teams = game:GetService("Teams")
 
-local FeatureFoundRemoteEvent = ReplicatedStorage:WaitForChild("FeatureFoundRemoteEvent")
 local GoldFoundRemoteEvent = ReplicatedStorage:WaitForChild("GoldFoundRemoteEvent")
 
 player = Players.LocalPlayer
-
-local function getApplauseSound()
-	local sound = Instance.new("Sound")
-	sound.SoundId = "rbxassetid://1869741275"
-	sound.Volume = 5
-	return sound
-end
 
 local function getCoinSound()
 	local sound = Instance.new("Sound")
@@ -32,39 +24,6 @@ local function getNatureSound()
 	natureSound.SoundId = "rbxassetid://169736440" -- ForestAmbienceVar2 (birds chirping, etc.)
 	natureSound.Volume = 3
 	return natureSound
-end
-
-local function getFeatureHitbox(feature)
-	local hitbox = Instance.new("Part")
-	local orientation, size = feature:GetBoundingBox()
-	hitbox.Anchored = true
-	hitbox.CanCollide = false
-	hitbox.CanTouch = true
-	hitbox.CFrame = orientation
-	hitbox.Name = "Hitbox"
-	hitbox.Size = size
-	hitbox.Transparency = 1
-	hitbox.Touched:Connect(function(hit)
-		if hit == player.Character.Humanoid.RootPart then
-			FeatureFoundRemoteEvent:FireServer(feature)
-			local applauseSound = getApplauseSound()
-			applauseSound.Parent = hitbox
-			applauseSound:Play()
-			applauseSound.Parent = SoundService
-		end
-	end)
-	return hitbox
-end
-
-local function getFeatureIndicator()
-	local indicator = Instance.new("Attachment")
-	indicator.Name = "Indicator"
-	indicator.Position = Vector3.new(0, 3, 0)
-	indicator:SetAttribute("Color", BrickColor.new("Lime green").Color)
-	indicator:SetAttribute("Enabled", true)
-	indicator:SetAttribute("Image", "rbxassetid://8239527343") -- Target.
-	indicator:SetAttribute("Team", BrickColor.new("White"))
-	return indicator
 end
 
 local function getSpikeTrapHitbox(trap)
@@ -94,9 +53,6 @@ local function getSpikeTrapHitbox(trap)
 		hitbox.CanTouch = false
 		-- Remove the spike trap from minimap.
 		CollectionService:RemoveTag(hitbox, "SpikeTrap")
-		-- Remove from Location Marking.
-		local indicator = hitbox:FindFirstChild("Indicator")
-		indicator:Destroy()
 		-- Commented out the code below to leave the trap in place after it was tripped.
 		--for _, part in ipairs(trap:GetChildren()) do
 		--	part.Position += Vector3.new(0, -10, 0)
@@ -106,18 +62,7 @@ local function getSpikeTrapHitbox(trap)
 	return hitbox
 end
 
-local function getSpikeTrapIndicator()
-	local indicator = Instance.new("Attachment")
-	indicator.Name = "Indicator"
-	indicator.Position = Vector3.new(0, 3, 0)
-	indicator:SetAttribute("Color", BrickColor.new("Black").Color)
-	indicator:SetAttribute("Enabled", true)
-	indicator:SetAttribute("Image", "rbxassetid://8239527343") -- Target.
-	indicator:SetAttribute("Team", BrickColor.new("White"))
-	return indicator
-end
-
--- Setup and tag all biome features.
+-- Setup all biome features.
 for _, biomeFolder in ipairs(workspace.Biomes:GetChildren()) do
 	for _, feature in ipairs(biomeFolder:GetChildren()) do
 		if feature:IsA("Model") then
@@ -125,25 +70,9 @@ for _, biomeFolder in ipairs(workspace.Biomes:GetChildren()) do
 			local natureSound = getNatureSound()
 			natureSound.Parent = feature:FindFirstChildWhichIsA("BasePart")
 			natureSound:Play() -- Birds chirping, etc.
-			-- Set up a hitbox around the feature.
-			local hitbox = getFeatureHitbox(feature)
-			hitbox.Parent = feature
-			-- Tagged for the minimap.
-			CollectionService:AddTag(hitbox, "BiomeFeature")
-			-- Tagged for Location Marking.
-			local indicator = getFeatureIndicator()
-			indicator.Parent = hitbox
 		end
 	end
 end
-
-FeatureFoundRemoteEvent.OnClientEvent:Connect(function(count, featureName)
-	local feature = workspace.Biomes:FindFirstChild(featureName, true)
-	local hitbox = feature:FindFirstChild("Hitbox")
-	if hitbox then
-		hitbox:Destroy()
-	end
-end)
 
 -- Setup hidden gold objects.
 for _, gold in ipairs(workspace.Gold.Hidden:GetChildren()) do
@@ -177,8 +106,5 @@ for _, trap in ipairs(workspace.SpikeTraps:GetChildren()) do
 	hitbox.Parent = workspace
 	-- Tagged for the minimap.
 	CollectionService:AddTag(hitbox, "SpikeTrap")
-	-- Tagged for Location Marking.
-	local indicator = getSpikeTrapIndicator()
-	indicator.Parent = hitbox
 end
 

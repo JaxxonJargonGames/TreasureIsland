@@ -15,7 +15,6 @@ local Minimap = require(player.PlayerScripts:WaitForChild("Minimap"))
 
 local screenGui = player:WaitForChild("PlayerGui"):WaitForChild("ScreenGui")
 
-local foundFeaturesFrame = screenGui:WaitForChild("FoundFeaturesScrollingFrame")
 local helpTextFrame = screenGui:WaitForChild("HelpTextScrollingFrame")
 local scoresFrame = screenGui:WaitForChild("TopScoresScrollingFrame")
 
@@ -52,11 +51,6 @@ ElapsedTimeEvent.Event:Connect(function(elapsedTime)
 	elapsedTimeIcon:setLabel("Elapsed: " .. tostring(elapsedTime))
 end)
 
-local foundFeaturesIcon = Icon.new()
-:setLabel("Features")
-:setMid()
-:bindToggleItem(foundFeaturesFrame)
-
 local topScoresIcon = Icon.new()
 :setLabel("Scores")
 :setMid()
@@ -66,11 +60,8 @@ helpTextFrame.HelpTextLabel.Text =
 	"Welcome to Jaxxon Jargon's Treasure Island. "
 	.. "You begin your adventure as part of the Red Team or Blue Team. "
 	.. "Each team battles the other for control of the island. "
-	.. "Your first objective is to explore the island for interesting features. "
-	.. "On the right of the screen is a miniature map of the island. "
-	.. "Marked on the minimap are features that contain clues to the location of hidden treasures. "
-	.. "After you find five features you will be armed with a crossbow. "
-	.. "Find all 24 features and you will receive a sniper rifle. "
+	.. "Your first objective is to explore the island for Gold. "
+	.. "Your next objective is to purchase useful items in the shop."
 	.. "Good luck. Your shipmates are counting on you."
 
 local helpIcon = Icon.new()

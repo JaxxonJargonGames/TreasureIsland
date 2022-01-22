@@ -35,6 +35,7 @@ TopScoresRemoteEvent.OnClientEvent:Connect(function(topScores)
 		horizontalListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 		horizontalListLayout.Parent = horizontalFrame
 		local userId = data.key
+		print(rank, userId)
 		local imageLabel = Instance.new("ImageLabel")
 		imageLabel.Image = Players:GetUserThumbnailAsync(userId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
 		imageLabel.Size = UDim2.new(0, 50, 0, 50)
@@ -44,8 +45,8 @@ TopScoresRemoteEvent.OnClientEvent:Connect(function(topScores)
 		padding.Transparency = 1
 		padding.Parent = horizontalFrame
 		local name = Players:GetNameFromUserIdAsync(userId)
-		local points = data.value
-		local text = name .. " is #" .. rank .. " with " .. points .. " points"
+		local gold = data.value
+		local text = name .. " is #" .. rank .. " with " .. gold .. " gold pieces"
 		local textLabel = getTextLabel(text)
 		textLabel.Parent = horizontalFrame
 	end

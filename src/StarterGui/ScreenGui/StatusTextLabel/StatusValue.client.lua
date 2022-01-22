@@ -35,8 +35,7 @@ local intro = {
 
 local messages = {
 	
-	[[Your first objective is to find five<br /> features to earn a <font color="rgb(255,200,50)">crossbow!</font> <font size="30">😈</font>]],
-	[[Find the rest of the features to earn a <font color="rgb(255,200,50)">sniper rifle!</font><br />Be sure to pick up gold along the way.]],
+	[[Your first objective is to find <font color="rgb(255,200,50)">gold!</font><br />Your second objective is to go shopping<br />for weapons and other useful items.]],
 }
 
 ChooseTeamRemoteEvent.OnClientEvent:Connect(function()
