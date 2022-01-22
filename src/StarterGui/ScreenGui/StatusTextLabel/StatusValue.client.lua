@@ -16,9 +16,6 @@ local label = script.Parent
 -- Load translator if game is localized
 --AnimateUI.loadTranslator()
 
--- Temporarily delay the display of the player leaderboard.
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-
 local function displayStatus(messages)
 	label.Visible = true
 	for _, message in pairs(messages) do
@@ -47,7 +44,6 @@ ChooseTeamRemoteEvent.OnClientEvent:Connect(function()
 	if featureCount < 5 then
 		displayStatus(messages)
 	end
-	StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, true)
 end)
 
 FeatureFoundRemoteEvent.OnClientEvent:Connect(function(count, featureName)
