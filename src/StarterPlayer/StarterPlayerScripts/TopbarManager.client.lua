@@ -60,8 +60,8 @@ helpTextFrame.HelpTextLabel.Text =
 	"Welcome to Jaxxon Jargon's Treasure Island. "
 	.. "You begin your adventure as part of the Red Team or Blue Team. "
 	.. "Each team battles the other for control of the island. "
-	.. "Your first objective is to explore the island for Gold. "
-	.. "Your next objective is to purchase useful items in the shop."
+	.. "Your first objective is to find Gold. "
+	.. "Your next objective is to purchase useful items in the shop. "
 	.. "Good luck. Your shipmates are counting on you."
 
 local helpIcon = Icon.new()
