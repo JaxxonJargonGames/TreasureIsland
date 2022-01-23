@@ -35,7 +35,6 @@ TopScoresRemoteEvent.OnClientEvent:Connect(function(topScores)
 		horizontalListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 		horizontalListLayout.Parent = horizontalFrame
 		local userId = data.key
-		print(rank, userId)
 		local imageLabel = Instance.new("ImageLabel")
 		imageLabel.Image = Players:GetUserThumbnailAsync(userId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
 		imageLabel.Size = UDim2.new(0, 50, 0, 50)
