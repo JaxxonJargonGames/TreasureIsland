@@ -13,6 +13,7 @@ local COOLDOWN = 3
 
 for _, door in ipairs(doors) do
 	local debounce = false
+	local handle = door.DoorHandle
 	door.Touched:Connect(function(hit)
 		if debounce then
 			return
@@ -23,9 +24,13 @@ for _, door in ipairs(doors) do
 			if Players:GetPlayerFromCharacter(hit.Parent.Parent) == player then
 				door.Transparency = 0.5
 				door.CanCollide = false
+				handle.Transparency = 1
+				handle.CanCollide = false
 				task.wait(COOLDOWN)
 				door.Transparency = 0
 				door.CanCollide = true
+				handle.Transparency = 0
+				handle.CanCollide = true
 			end
 		end
 		debounce = false
