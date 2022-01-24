@@ -5,7 +5,7 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local ServerStorage = game:GetService("ServerStorage")
 
 local GoldFoundRemoteEvent = ReplicatedStorage:WaitForChild("GoldFoundRemoteEvent")
-local JumpingBootsRemoteEvent = ReplicatedStorage:WaitForChild("JumpingBootsRemoteEvent")
+local JumpingBootsPurchasedRemoteEvent = ReplicatedStorage:WaitForChild("JumpingBootsPurchasedRemoteEvent")
 local StatusRemoteEvent = ReplicatedStorage:WaitForChild("StatusRemoteEvent")
 local TopScoresRemoteEvent = ReplicatedStorage:WaitForChild("TopScoresRemoteEvent")
 
@@ -53,7 +53,7 @@ GoldFoundRemoteEvent.OnServerEvent:Connect(function(player, gold)
 	onGoldFound(player, gold.Name)
 end)
 
-JumpingBootsRemoteEvent.OnServerEvent:Connect(function(player)
+JumpingBootsPurchasedRemoteEvent.OnServerEvent:Connect(function(player)
 	player.leaderstats.Gold.Value -= JUMPING_BOOTS_PRICE
 	player:SetAttribute("HasJumpingBoots", true)
 end)
