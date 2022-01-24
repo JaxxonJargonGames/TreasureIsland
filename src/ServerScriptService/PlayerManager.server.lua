@@ -28,7 +28,7 @@ local sniperRifle = ServerStorage:WaitForChild(("Sniper Rifle 10x Scope"))
 
 local FORCE_FIELD_DURATION = 60
 local STARTING_GOLD = 0
-local JUMPING_BOOTS_GOLD = 100
+local JUMPING_BOOTS_PRICE = 100
 
 game.Players.CharacterAutoLoads = false
 
@@ -54,7 +54,7 @@ GoldFoundRemoteEvent.OnServerEvent:Connect(function(player, gold)
 end)
 
 JumpingBootsRemoteEvent.OnServerEvent:Connect(function(player)
-	player.leaderstats.Gold.Value -= JUMPING_BOOTS_GOLD
+	player.leaderstats.Gold.Value -= JUMPING_BOOTS_PRICE
 	player:SetAttribute("HasJumpingBoots", true)
 end)
 
