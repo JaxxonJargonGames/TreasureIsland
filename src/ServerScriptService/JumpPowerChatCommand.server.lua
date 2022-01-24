@@ -16,10 +16,12 @@ end
 
 local function onPlayerChatted(player, message, recipient)
 	if hasMatchingCommandName(message, COMMAND) then
+		local character = player.Character or player.CharacterAdded:wait()
 		local power = getPowerFromMessage(message)
 		if power then
-			local character = player.Character or player.CharacterAdded:wait()
 			character.Humanoid.JumpPower = power
+		else
+			print("Jump Power:", character.Humanoid.JumpPower)
 		end
 	end
 end
