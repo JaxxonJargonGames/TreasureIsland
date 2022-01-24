@@ -7,7 +7,6 @@ local humanoid = character:WaitForChild("Humanoid")
 local textLabel = script.Parent
 
 local function update()
-	print("Jump Power update()", humanoid.JumpPower)
 	textLabel.Text = "Jump Power: " .. tostring(humanoid.JumpPower)
 end
 
