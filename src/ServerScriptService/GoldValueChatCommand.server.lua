@@ -2,7 +2,7 @@ local Players = game:GetService("Players")
 
 -- Command to add an amount of gold. (note the trailing space)
 local ADD_COMMAND = "/addgold "
-local SET_COMMAND = "/setgold "
+local SET_COMMAND = "/gold "
 
 local function hasMatchingCommandName(text, command)
 	-- Note: string.sub(message, ...) is the same as text:sub(...)
