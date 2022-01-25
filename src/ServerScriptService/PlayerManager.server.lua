@@ -20,15 +20,17 @@ local SessionData = DataStoreService:GetDataStore("SessionData")
 -- game:GetService("DataStoreService"):GetDataStore("SessionData"):RemoveAsync(3138096286)
 -- game:GetService("DataStoreService"):GetOrderedDataStore("GlobalGold"):RemoveAsync(3138096286)
 
+local ForceFieldModule = require(ServerScriptService.ForceField)
+local JumpingBootsModule = require(ReplicatedStorage:WaitForChild("JumpingBoots"))
 local SessionDataModule = require(ServerScriptService.SessionData)
-local ForceField = require(ServerScriptService.ForceField)
 
 local crossbow = ServerStorage:WaitForChild("Crossbow 5x Scope")
 local sniperRifle = ServerStorage:WaitForChild(("Sniper Rifle 10x Scope"))
 
 local FORCE_FIELD_DURATION = 60
 local STARTING_GOLD = 0
-local JUMPING_BOOTS_PRICE = 100
+
+local JUMPING_BOOTS_PRICE = JumpingBootsModule.PRICE
 
 game.Players.CharacterAutoLoads = false
 
@@ -53,8 +55,16 @@ GoldFoundRemoteEvent.OnServerEvent:Connect(function(player, gold)
 	onGoldFound(player, gold.Name)
 end)
 
-JumpingBootsPurchasedRemoteEvent.OnServerEvent:Connect(function(player)
-	player.leaderstats.Gold.Value -= JUMPING_BOOTS_PRICE
+JumpingBootsPurchasedRemoteEvent.OnServerEvent:Connect(function(player, purchase)
+	print("JumpingBootsPurchasedRemoteEvent.OnServerEvent:Connect(function(player, purchase)", purchase)
+	if purchase then
+		print("purchase", purchase)
+		print(player.leaderstats.Gold.Value)
+		print("JUMPING_BOOTS_PRICE", JUMPING_BOOTS_PRICE)
+		player.leaderstats.Gold.Value -= JUMPING_BOOTS_PRICE
+		print("player.leaderstats.Gold.Value -= JUMPING_BOOTS_PRICE")
+		print(player.leaderstats.Gold.Value)	
+	end
 	player:SetAttribute("HasJumpingBoots", true)
 end)
 
@@ -114,7 +124,7 @@ local function onCharacterAdded(character, player)
 	humanoid.Died:Connect(function()
 		onHumanoidDied(player)
 	end)
-	ForceField.setupForceField(character, FORCE_FIELD_DURATION)
+	ForceFieldModule.setupForceField(character, FORCE_FIELD_DURATION)
 end
 
 local function onPlayerAdded(player)
