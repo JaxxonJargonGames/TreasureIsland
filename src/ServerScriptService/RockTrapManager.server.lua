@@ -60,14 +60,18 @@ for _, trap in ipairs(workspace.RockTraps:GetChildren()) do
 		end
 		if hit.Parent:FindFirstChild("Humanoid") then
 			debounce = true
-			local boulder = getBoulder()
-			boulder.Position = rockSpawn.Position
-			boulder.Parent = workspace
-			local sound = getBoulderCrashSound()
-			sound.Parent = boulder
-			sound:Play()
-			sound.Parent = SoundService
-			task.wait(2)
+			local numberOfBoulders = random:NextInteger(1, 5)
+			for n = 1, numberOfBoulders, 1 do
+				local boulder = getBoulder()
+				boulder.Position = rockSpawn.Position
+				boulder.Parent = workspace
+				local sound = getBoulderCrashSound()
+				sound.Parent = boulder
+				sound:Play()
+				sound.Parent = SoundService
+				local timeBetweenBoulders = random:NextInteger(1, 5)
+				task.wait(timeBetweenBoulders)
+			end
 			debounce = false
 		end
 	end)
