@@ -56,18 +56,18 @@ local topScoresIcon = Icon.new()
 :setMid()
 :bindToggleItem(scoresFrame)
 
-helpTextFrame.HelpTextLabel.Text =
-	"Welcome to Jaxxon Jargon's Treasure Island. "
-	.. "You begin your adventure as part of the Red Team or Blue Team. "
-	.. "Each team battles the other for control of the island. "
-	.. "Your first objective is to find Gold. "
-	.. "Your next objective is to purchase useful items in the shop. "
-	.. "Good luck. Your shipmates are counting on you."
+-- helpTextFrame.HelpTextLabel.Text =
+-- 	"Welcome to Jaxxon Jargon's Treasure Island. "
+-- 	.. "You begin your adventure as part of the Red Team or Blue Team. "
+-- 	.. "Each team battles the other for control of the island. "
+-- 	.. "Your first objective is to find Gold. "
+-- 	.. "Your next objective is to purchase useful items in the shop. "
+-- 	.. "Good luck. Your shipmates are counting on you."
 
-local helpIcon = Icon.new()
-:setLabel("Help")
-:setMid()
-:bindToggleItem(helpTextFrame)
+-- local helpIcon = Icon.new()
+-- :setLabel("Help")
+-- :setMid()
+-- :bindToggleItem(helpTextFrame)
 
 local mapIcon = Icon.new()
 :setLabel("Map")
