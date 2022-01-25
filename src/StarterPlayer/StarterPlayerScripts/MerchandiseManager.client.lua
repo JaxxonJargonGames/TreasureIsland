@@ -18,7 +18,7 @@ local function setupJumpingBoots()
 	local hasJumpingBoots = player:GetAttribute("HasJumpingBoots") or nil
 	if hasJumpingBoots then
 		local purchase = false
-		JumpingBootsPurchasedRemoteEvent:FireServer(player, purchase)
+		JumpingBootsPurchasedRemoteEvent:FireServer(purchase)
 	end
 end
 
@@ -54,7 +54,8 @@ local function getDialog()
 			if player:GetAttribute("HasJumpingBoots") then
 				choice.ResponseDialog = "You already have jumping boots."
 			elseif player.leaderstats.Gold.Value >= JUMPING_BOOTS_PRICE then
-				JumpingBootsPurchasedRemoteEvent:FireServer(player, true)
+				local purchase = true
+				JumpingBootsPurchasedRemoteEvent:FireServer(purchase)
 				local coinSound = getCoinSound()
 				coinSound.Parent = dialog.Parent
 				coinSound:Play()
