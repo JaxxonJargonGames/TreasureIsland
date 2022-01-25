@@ -20,9 +20,9 @@ local SessionData = DataStoreService:GetDataStore("SessionData")
 -- game:GetService("DataStoreService"):GetDataStore("SessionData"):RemoveAsync(3138096286)
 -- game:GetService("DataStoreService"):GetOrderedDataStore("GlobalGold"):RemoveAsync(3138096286)
 
-local ForceFieldModule = require(ServerScriptService.ForceField)
-local JumpingBootsModule = require(ReplicatedStorage:WaitForChild("JumpingBoots"))
-local SessionDataModule = require(ServerScriptService.SessionData)
+local ForceFieldModule = require(ServerScriptService:WaitForChild("ForceField"))
+local MerchandiseModule = require(ReplicatedStorage:WaitForChild("Merchandise"))
+local SessionDataModule = require(ServerScriptService:WaitForChild("SessionData"))
 
 local crossbow = ServerStorage:WaitForChild("Crossbow 5x Scope")
 local sniperRifle = ServerStorage:WaitForChild(("Sniper Rifle 10x Scope"))
@@ -30,8 +30,8 @@ local sniperRifle = ServerStorage:WaitForChild(("Sniper Rifle 10x Scope"))
 local FORCE_FIELD_DURATION = 60
 local STARTING_GOLD = 0
 
-local JUMPING_BOOTS_POWER = JumpingBootsModule.POWER
-local JUMPING_BOOTS_PRICE = JumpingBootsModule.PRICE
+local JUMPING_BOOTS_POWER = MerchandiseModule.JUMPING_BOOTS_POWER
+local JUMPING_BOOTS_PRICE = MerchandiseModule.JUMPING_BOOTS_PRICE
 
 game.Players.CharacterAutoLoads = false
 

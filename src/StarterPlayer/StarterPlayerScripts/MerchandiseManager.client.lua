@@ -10,9 +10,9 @@ local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
-local JumpingBootsModule = require(ReplicatedStorage:WaitForChild("JumpingBoots"))
+local MerchandiseModule = require(ReplicatedStorage:WaitForChild("Merchandise"))
 
-local JUMPING_BOOTS_PRICE = JumpingBootsModule.PRICE
+local JUMPING_BOOTS_PRICE = MerchandiseModule.JUMPING_BOOTS_PRICE
 
 local function setupJumpingBoots()
 	local hasJumpingBoots = player:GetAttribute("HasJumpingBoots") or nil
@@ -41,13 +41,13 @@ local function getDialog()
 	local choice1 = Instance.new("DialogChoice")
 	choice1.GoodbyeChoiceActive = true
 	choice1.UserDialog = "Jumping boots."
-	choice1.ResponseDialog = "That will cost 100 pieces of gold."
+	choice1.ResponseDialog = "That will cost " .. tostring(JUMPING_BOOTS_PRICE) .. " pieces of gold."
 	choice1.GoodbyeDialog = "No, thanks."
 	choice1.Parent = dialog
 	local choiceA = Instance.new("DialogChoice")
 	choiceA.GoodbyeChoiceActive = false
 	choiceA.Name = "Purchase Jumping Boots"
-	choiceA.UserDialog = "Purchase for 100!"
+	choiceA.UserDialog = "Purchase for " .. tostring(JUMPING_BOOTS_PRICE) .. "!"
 	choiceA.Parent = choice1
 	dialog.DialogChoiceSelected:Connect(function(player, choice)
 		if choice.Name == "Purchase Jumping Boots" then
