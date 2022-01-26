@@ -64,10 +64,12 @@ JumpingBootsPurchasedRemoteEvent.OnServerEvent:Connect(function(player, purchase
 	player:SetAttribute("HasJumpingBoots", true)
 end)
 
--- TODO: dealer gets half of the target's gold.
--- PlayerKilledEvent.Event:Connect(function(target, dealer)
--- 	dealer.leaderstats.Points.Value += PLAYER_KILLED_POINTS
--- end)
+-- Dealer gets to steal half of the target's gold.
+PlayerKilledEvent.Event:Connect(function(target, dealer)
+	local stolenGold = math.round(target.leaderstats.Gold.Value / 2)
+	dealer.leaderstats.Points.Value += stolenGold
+	target.leaderstats.Points.Value -= stolenGold
+end)
 
 local function onHumanoidDied(player)
 	player:LoadCharacter()

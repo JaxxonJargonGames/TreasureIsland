@@ -27,7 +27,10 @@ GoldFoundRemoteEvent.OnServerEvent:Connect(function(player, gold)
 	scoreAnnouncer:SayMessage(message, "All")
 end)
 
-PlayerKilledEvent.Event:Connect(function(targetPlayer, dealerPlayer)
-	local message = targetPlayer.DisplayName .. " was killed by " .. dealerPlayer.DisplayName
+PlayerKilledEvent.Event:Connect(function(target, dealer)
+	local message = target.DisplayName .. " was killed by " .. dealer.DisplayName
+	scoreAnnouncer:SayMessage(message, "All")
+	local stolenGold = math.round(target.leaderstats.Gold.Value / 2)
+	local message = dealer.DisplayName .. " stole " .. tostring(stolenGold) .. " pieces of gold!"
 	scoreAnnouncer:SayMessage(message, "All")
 end)
