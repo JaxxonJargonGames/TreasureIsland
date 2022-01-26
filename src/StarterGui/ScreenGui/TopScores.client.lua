@@ -24,12 +24,12 @@ TopScoresRemoteEvent.OnClientEvent:Connect(function(topScores)
 	textLabel.TextColor3 = Color3.new(255, 200, 100)
 	textLabel.TextSize = 24
 	textLabel.TextXAlignment = Enum.TextXAlignment.Center
-	textLabel.Parent = script.Parent
+	textLabel.Parent = script.Parent.TopScoresScrollingFrame
 	for rank, data in ipairs(topScores) do
 		local horizontalFrame = Instance.new("Frame")
 		horizontalFrame.BackgroundTransparency = 1
 		horizontalFrame.Size = UDim2.new(0, 500, 0, 50)
-		horizontalFrame.Parent = script.Parent
+		horizontalFrame.Parent = script.Parent.TopScoresScrollingFrame
 		local horizontalListLayout = Instance.new("UIListLayout")
 		horizontalListLayout.FillDirection = Enum.FillDirection.Horizontal
 		horizontalListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
