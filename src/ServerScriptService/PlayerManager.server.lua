@@ -80,8 +80,8 @@ end)
 -- Dealer gets to steal half of the target's gold.
 PlayerKilledEvent.Event:Connect(function(target, dealer)
 	local stolenGold = math.round(target.leaderstats.Gold.Value / 2)
-	dealer.leaderstats.Points.Value += stolenGold
-	target.leaderstats.Points.Value -= stolenGold
+	dealer.leaderstats.Gold.Value += stolenGold
+	target.leaderstats.Gold.Value -= stolenGold
 end)
 
 local function onHumanoidDied(player)
