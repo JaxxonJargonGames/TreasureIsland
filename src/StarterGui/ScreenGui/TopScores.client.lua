@@ -18,7 +18,10 @@ local function getTextLabel(text)
 end
 
 TopScoresRemoteEvent.OnClientEvent:Connect(function(topScores)
-	-- script.Parent:ClearAllChildren()
+	frame = script.Parent:WaitForChild("TopScoresScrollingFrame")
+	frame:ClearAllChildren()
+	layout = Instance.new("VerticalListLayout")
+	layout.Parent = frame
 	local textLabel = getTextLabel("Top 20 Scores of All Time")
 	textLabel.Font = Enum.Font.GothamBold
 	textLabel.Size = UDim2.new(0, 500, 0, 50)
