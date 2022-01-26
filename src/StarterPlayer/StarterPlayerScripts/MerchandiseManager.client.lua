@@ -24,7 +24,11 @@ local function setupCrossbow()
 	end
 end
 
-setupCrossbow()
+local SetupMerchandiseRemoteEvent = ReplicatedStorage:WaitForChild("SetupMerchandiseRemoteEvent")
+
+SetupMerchandiseRemoteEvent.OnClientEvent:Connect(function()
+	setupCrossbow()
+end)
 
 local function setupJumpingBoots()
 	local hasJumpingBoots = player:GetAttribute("HasJumpingBoots") or nil
