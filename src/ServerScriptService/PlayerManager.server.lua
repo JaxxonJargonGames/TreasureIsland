@@ -169,14 +169,14 @@ local function saveGlobal(player)
 end
 
 local function onSavepoint(player)
-	saveGlobal(player)
 	saveData(player)
+	saveGlobal(player)
 	setupTopScores(player)
 end
 
-game.Players.PlayerRemoving:Connect(function()
-	saveGlobal(player)
+game.Players.PlayerRemoving:Connect(function(player)
 	saveData(player)
+	saveGlobal(player)
 end)
 
 SavepointRemoteEvent.OnServerEvent:Connect(onSavepoint)
