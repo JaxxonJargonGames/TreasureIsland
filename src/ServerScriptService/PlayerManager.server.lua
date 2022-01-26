@@ -110,7 +110,7 @@ local function setupSessionData(player)
 	end
 end
 
-local function updateTopScores(player)
+local function setupTopScores(player)
 	local isAscending = false
 	local pageSize = 20
 	local pages = GlobalGold:GetSortedAsync(isAscending, pageSize)
@@ -132,7 +132,7 @@ local function onPlayerAdded(player)
 	end)
 	player:LoadCharacter()
 	setupSessionData(player)
-	updateTopScores(player)
+	setupTopScores(player)
 end
 
 for _, player in pairs(Players:GetPlayers()) do
@@ -171,7 +171,7 @@ end
 local function onSavepoint(player)
 	saveGlobal(player)
 	saveData(player)
-	updateTopScores(player)
+	setupTopScores(player)
 end
 
 game.Players.PlayerRemoving:Connect(function()
