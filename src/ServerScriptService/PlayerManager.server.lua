@@ -110,7 +110,7 @@ local function setupSessionData(player)
 	end
 end
 
-local function setupTopScores(player)
+local function updateTopScores(player)
 	local isAscending = false
 	local pageSize = 20
 	local pages = GlobalGold:GetSortedAsync(isAscending, pageSize)
@@ -132,7 +132,7 @@ local function onPlayerAdded(player)
 	end)
 	player:LoadCharacter()
 	setupSessionData(player)
-	setupTopScores(player)
+	updateTopScores(player)
 end
 
 for _, player in pairs(Players:GetPlayers()) do
@@ -154,7 +154,6 @@ local function saveData(player)
 	end
 end
 
--- TODO
 local function saveGlobal(player)
 	local currentGold = player.leaderstats.Gold.Value
 	local savedGold = player:GetAttribute("SavedGold") or 0
@@ -169,21 +168,21 @@ local function saveGlobal(player)
 end
 
 local function onSavepoint(player)
-	saveData(player)
 	saveGlobal(player)
-	setupTopScores(player)
+	saveData(player)
+	updateTopScores(player)
 end
 
 game.Players.PlayerRemoving:Connect(function(player)
-	saveData(player)
 	saveGlobal(player)
+	saveData(player)
 end)
 
 SavepointRemoteEvent.OnServerEvent:Connect(onSavepoint)
 
 game:BindToClose(function()
 	for _, player in pairs(game.Players:GetPlayers()) do
-		saveData(player)
 		saveGlobal(player)
+		saveData(player)
 		end
 end)
