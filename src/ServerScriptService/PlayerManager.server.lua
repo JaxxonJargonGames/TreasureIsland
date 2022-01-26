@@ -4,8 +4,9 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 local ServerStorage = game:GetService("ServerStorage")
 
+local CrossbowAddedRemoteEvent = ReplicatedStorage:WaitForChild("CrossbowAddedRemoteEvent")
 local GoldFoundRemoteEvent = ReplicatedStorage:WaitForChild("GoldFoundRemoteEvent")
-local JumpingBootsPurchasedRemoteEvent = ReplicatedStorage:WaitForChild("JumpingBootsPurchasedRemoteEvent")
+local JumpingBootsAddedRemoteEvent = ReplicatedStorage:WaitForChild("JumpingBootsAddedRemoteEvent")
 local SavepointRemoteEvent = ReplicatedStorage:WaitForChild("SavepointRemoteEvent")
 local StatusRemoteEvent = ReplicatedStorage:WaitForChild("StatusRemoteEvent")
 local TopScoresRemoteEvent = ReplicatedStorage:WaitForChild("TopScoresRemoteEvent")
@@ -31,6 +32,7 @@ local sniperRifle = ServerStorage:WaitForChild(("Sniper Rifle 10x Scope"))
 local FORCE_FIELD_DURATION = 60
 local STARTING_GOLD = 0
 
+local CROSSBOW_PRICE = MerchandiseModule.CROSSBOW_PRICE
 local JUMPING_BOOTS_POWER = MerchandiseModule.JUMPING_BOOTS_POWER
 local JUMPING_BOOTS_PRICE = MerchandiseModule.JUMPING_BOOTS_PRICE
 
@@ -46,6 +48,15 @@ game.Players.CharacterAutoLoads = false
 -- 	sniperRifle:Clone().Parent = player.StarterGear
 -- end
 
+CrossbowAddedRemoteEvent.OnServerEvent:Connect(function(player, purchase)
+	if purchase then
+		player.leaderstats.Gold.Value -= CROSSBOW_PRICE
+	end
+	crossbow:Clone().Parent = player.Backpack
+	crossbow:Clone().Parent = player.StarterGear
+player:SetAttribute("HasCrossbow", true)
+end)
+
 local function onGoldFound(player, goldName)
 	table.insert(SessionDataModule.foundGold, goldName)
 	GoldFoundRemoteEvent:FireClient(player, goldName)
@@ -57,7 +68,7 @@ GoldFoundRemoteEvent.OnServerEvent:Connect(function(player, gold)
 	onGoldFound(player, gold.Name)
 end)
 
-JumpingBootsPurchasedRemoteEvent.OnServerEvent:Connect(function(player, purchase)
+JumpingBootsAddedRemoteEvent.OnServerEvent:Connect(function(player, purchase)
 	if purchase then
 		player.leaderstats.Gold.Value -= JUMPING_BOOTS_PRICE
 	end
@@ -100,6 +111,10 @@ local function setupSessionData(player)
 			for _, goldName in ipairs(savedGold) do
 				onGoldFound(player, goldName)
 			end
+		end
+		local hasCrossbow = savedData["Has Crossbow"]
+		if hasCrossbow then
+			player:SetAttribute("HasCrossbow", hasCrossbow)
 		end
 		local hasJumpingBoots = savedData["Has Jumping Boots"]
 		if hasJumpingBoots then
@@ -144,7 +159,8 @@ local function saveData(player)
 	local data = {
 		["Gold"] = player.leaderstats.Gold.Value,
 		["Found Gold"] = SessionDataModule.foundGold,
-		["Has Jumping Boots"] = player:GetAttribute("HasJumpingBoots")
+		["Has Crossbow"] = player:GetAttribute("HasCrossbow"),
+		["Has Jumping Boots"] = player:GetAttribute("HasJumpingBoots"),
 	}
 	local success, errorMessage = pcall(function()
 		SessionData:SetAsync(player.UserId, data)
