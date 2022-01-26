@@ -189,24 +189,22 @@ local function saveGlobal(player)
 	end
 end
 
--- TODO: Swap saveData and saveGlobal.
-
 local function onSavepoint(player)
-	saveGlobal(player)
 	saveData(player)
+	saveGlobal(player)
 	updateTopScores(player)
 end
 
 game.Players.PlayerRemoving:Connect(function(player)
-	saveGlobal(player)
 	saveData(player)
+	saveGlobal(player)
 end)
 
 SavepointRemoteEvent.OnServerEvent:Connect(onSavepoint)
 
 game:BindToClose(function()
 	for _, player in pairs(game.Players:GetPlayers()) do
-		saveGlobal(player)
 		saveData(player)
+		saveGlobal(player)
 		end
 end)
