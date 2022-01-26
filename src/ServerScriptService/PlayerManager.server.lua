@@ -8,6 +8,7 @@ local CrossbowAddedRemoteEvent = ReplicatedStorage:WaitForChild("CrossbowAddedRe
 local GoldFoundRemoteEvent = ReplicatedStorage:WaitForChild("GoldFoundRemoteEvent")
 local JumpingBootsAddedRemoteEvent = ReplicatedStorage:WaitForChild("JumpingBootsAddedRemoteEvent")
 local SavepointRemoteEvent = ReplicatedStorage:WaitForChild("SavepointRemoteEvent")
+local SniperRifleAddedRemoteEvent = ReplicatedStorage:WaitForChild("SniperRifleAddedRemoteEvent")
 local StatusRemoteEvent = ReplicatedStorage:WaitForChild("StatusRemoteEvent")
 local TopScoresRemoteEvent = ReplicatedStorage:WaitForChild("TopScoresRemoteEvent")
 
@@ -35,18 +36,9 @@ local STARTING_GOLD = 0
 local CROSSBOW_PRICE = MerchandiseModule.CROSSBOW_PRICE
 local JUMPING_BOOTS_POWER = MerchandiseModule.JUMPING_BOOTS_POWER
 local JUMPING_BOOTS_PRICE = MerchandiseModule.JUMPING_BOOTS_PRICE
+local SNIPER_RIFLE_PRICE = MerchandiseModule.SNIPER_RIFLE_PRICE
 
 game.Players.CharacterAutoLoads = false
-
--- local function crossbowEarned(player)
--- 	crossbow:Clone().Parent = player.Backpack
--- 	crossbow:Clone().Parent = player.StarterGear
--- end
-
--- local function sniperRifleEarned(player)
--- 	sniperRifle:Clone().Parent = player.Backpack
--- 	sniperRifle:Clone().Parent = player.StarterGear
--- end
 
 CrossbowAddedRemoteEvent.OnServerEvent:Connect(function(player, purchase)
 	if purchase then
@@ -74,6 +66,15 @@ JumpingBootsAddedRemoteEvent.OnServerEvent:Connect(function(player, purchase)
 	end
 	player.Character.Humanoid.JumpPower = JUMPING_BOOTS_POWER
 	player:SetAttribute("HasJumpingBoots", true)
+end)
+
+SniperRifleAddedRemoteEvent.OnServerEvent:Connect(function(player, purchase)
+	if purchase then
+		player.leaderstats.Gold.Value -= SNIPER_RIFLE_PRICE
+	end
+	sniperRifle:Clone().Parent = player.Backpack
+	sniperRifle:Clone().Parent = player.StarterGear
+player:SetAttribute("HasSniperRifle", true)
 end)
 
 -- Dealer gets to steal half of the target's gold.
@@ -120,6 +121,10 @@ local function setupSessionData(player)
 		if hasJumpingBoots then
 			player:SetAttribute("HasJumpingBoots", hasJumpingBoots)
 		end
+		local hasSniperRifle = savedData["Has Sniper Rifle"]
+		if hasSniperRifle then
+			player:SetAttribute("HasSniperRifle", hasCrossbow)
+		end
 		-- Save to a player attribute so we can compare it for the global scores.
 		player:SetAttribute("SavedGold", goldValue.Value)
 	end
@@ -161,6 +166,7 @@ local function saveData(player)
 		["Found Gold"] = SessionDataModule.foundGold,
 		["Has Crossbow"] = player:GetAttribute("HasCrossbow"),
 		["Has Jumping Boots"] = player:GetAttribute("HasJumpingBoots"),
+		["Has Sniper Rifle"] = player:GetAttribute("HasSniperRifle"),
 	}
 	local success, errorMessage = pcall(function()
 		SessionData:SetAsync(player.UserId, data)
@@ -182,6 +188,8 @@ local function saveGlobal(player)
 		end
 	end
 end
+
+-- TODO: Swap saveData and saveGlobal.
 
 local function onSavepoint(player)
 	saveGlobal(player)

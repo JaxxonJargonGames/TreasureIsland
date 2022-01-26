@@ -5,6 +5,8 @@ local SoundService = game:GetService("SoundService")
 
 local CrossbowAddedRemoteEvent = ReplicatedStorage:WaitForChild("CrossbowAddedRemoteEvent")
 local JumpingBootsAddedRemoteEvent = ReplicatedStorage:WaitForChild("JumpingBootsAddedRemoteEvent")
+local SetupMerchandiseRemoteEvent = ReplicatedStorage:WaitForChild("SetupMerchandiseRemoteEvent")
+local SniperRifleAddedRemoteEvent = ReplicatedStorage:WaitForChild("SniperRifleAddedRemoteEvent")
 
 local merchants = workspace:WaitForChild("Merchants"):GetChildren()
 local player = Players.LocalPlayer
@@ -15,6 +17,7 @@ local MerchandiseModule = require(ReplicatedStorage:WaitForChild("Merchandise"))
 
 local CROSSBOW_PRICE = MerchandiseModule.CROSSBOW_PRICE
 local JUMPING_BOOTS_PRICE = MerchandiseModule.JUMPING_BOOTS_PRICE
+local SNIPER_RIFLE_PRICE = MerchandiseModule.SNIPER_RIFLE_PRICE
 
 local function setupCrossbow()
 	local hasCrossbow = player:GetAttribute("HasCrossbow") or nil
@@ -24,10 +27,17 @@ local function setupCrossbow()
 	end
 end
 
-local SetupMerchandiseRemoteEvent = ReplicatedStorage:WaitForChild("SetupMerchandiseRemoteEvent")
+local function setupSniperRifle()
+	local hasSniperRifle = player:GetAttribute("HasSniperRifle") or nil
+	if hasSniperRifle then
+		local purchase = false
+		SniperRifleAddedRemoteEvent:FireServer(purchase)
+	end
+end
 
 SetupMerchandiseRemoteEvent.OnClientEvent:Connect(function()
 	setupCrossbow()
+	setupSniperRifle()
 end)
 
 local function setupJumpingBoots()
@@ -105,6 +115,34 @@ local function getDialog()
 				coinSound:Play()
 				coinSound.Parent = SoundService
 				choice.ResponseDialog = "Enjoy your new crossbow!"
+			else
+				choice.ResponseDialog = "You don't have enough gold."
+			end
+		end
+	end)
+	local choice3 = Instance.new("DialogChoice")
+	choice3.GoodbyeChoiceActive = true
+	choice3.UserDialog = "Sniper Rifle."
+	choice3.ResponseDialog = "That will cost " .. SNIPER_RIFLE_PRICE .. " pieces of gold."
+	choice3.GoodbyeDialog = "No, thanks."
+	choice3.Parent = dialog
+	local choiceC = Instance.new("DialogChoice")
+	choiceC.GoodbyeChoiceActive = false
+	choiceC.Name = "Purchase Sniper Rifle"
+	choiceC.UserDialog = "Purchase for " .. SNIPER_RIFLE_PRICE .. "!"
+	choiceC.Parent = choice3
+	dialog.DialogChoiceSelected:Connect(function(player, choice)
+		if choice.Name == "Purchase Sniper Rifle" then
+			if player:GetAttribute("HasSniperRifle") then
+				choice.ResponseDialog = "You already have a sniper rifle."
+			elseif player.leaderstats.Gold.Value >= SNIPER_RIFLE_PRICE then
+				local purchase = true
+				SniperRifleAddedRemoteEvent:FireServer(purchase)
+				local coinSound = getCoinSound()
+				coinSound.Parent = dialog.Parent
+				coinSound:Play()
+				coinSound.Parent = SoundService
+				choice.ResponseDialog = "Enjoy your new sniper rifle!"
 			else
 				choice.ResponseDialog = "You don't have enough gold."
 			end
