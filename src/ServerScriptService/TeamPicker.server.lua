@@ -3,7 +3,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
 
 local ChooseTeamRemoteEvent = ReplicatedStorage:WaitForChild("ChooseTeamRemoteEvent")
-local FeatureDataEvent = ServerStorage:WaitForChild("FeatureDataEvent")
 local PlayerEnterRemoteEvent = ReplicatedStorage:WaitForChild("PlayerEnterRemoteEvent")
 
 local BLUE_KEYCARD = "Blue Keycard"
@@ -27,7 +26,6 @@ ChooseTeamRemoteEvent.OnServerEvent:Connect(function(player, teamColor)
 	player:LoadCharacter()
 	setupKeycard(player)
 	ChooseTeamRemoteEvent:FireClient(player)
-	FeatureDataEvent:Fire(player)
 end)
 
 Players.PlayerAdded:Connect(function(player)

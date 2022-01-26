@@ -6,6 +6,7 @@ local ServerStorage = game:GetService("ServerStorage")
 
 local GoldFoundRemoteEvent = ReplicatedStorage:WaitForChild("GoldFoundRemoteEvent")
 local JumpingBootsPurchasedRemoteEvent = ReplicatedStorage:WaitForChild("JumpingBootsPurchasedRemoteEvent")
+local SavepointRemoteEvent = ReplicatedStorage:WaitForChild("SavepointRemoteEvent")
 local StatusRemoteEvent = ReplicatedStorage:WaitForChild("StatusRemoteEvent")
 local TopScoresRemoteEvent = ReplicatedStorage:WaitForChild("TopScoresRemoteEvent")
 
@@ -153,6 +154,7 @@ local function saveData(player)
 	end
 end
 
+-- TODO
 local function saveGlobal(player)
 	local currentGold = player.leaderstats.Gold.Value
 	local savedGold = player:GetAttribute("SavedGold") or 0
@@ -166,15 +168,22 @@ local function saveGlobal(player)
 	end
 end
 
-local function onPlayerRemoving(player)
+local function onSavepoint(player)
 	saveGlobal(player)
 	saveData(player)
+	setupTopScores(player)
 end
-game.Players.PlayerRemoving:Connect(onPlayerRemoving)
+
+game.Players.PlayerRemoving:Connect(function()
+	saveGlobal(player)
+	saveData(player)
+end)
+
+SavepointRemoteEvent.OnServerEvent:Connect(onSavepoint)
 
 game:BindToClose(function()
 	for _, player in pairs(game.Players:GetPlayers()) do
 		saveData(player)
 		saveGlobal(player)
-	end
+		end
 end)

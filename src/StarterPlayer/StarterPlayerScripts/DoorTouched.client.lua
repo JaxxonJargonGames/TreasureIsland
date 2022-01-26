@@ -1,4 +1,7 @@
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local SavepointRemoteEvent = ReplicatedStorage:WaitForChild("SavepointRemoteEvent")
 
 local player = Players.LocalPlayer
 
@@ -27,6 +30,7 @@ for _, door in ipairs(doors) do
 				handle.Transparency = 1
 				handle.CanCollide = false
 				task.wait(COOLDOWN)
+				SavepointRemoteEvent:FireServer()
 				door.Transparency = 0
 				door.CanCollide = true
 				handle.Transparency = 0
