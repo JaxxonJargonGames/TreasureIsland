@@ -17,9 +17,6 @@ local function getTextLabel(text)
 	return textLabel
 end
 
-local function resetTopScores()
-end
-
 TopScoresRemoteEvent.OnClientEvent:Connect(function(topScores)
 	-- script.Parent:ClearAllChildren()
 	local textLabel = getTextLabel("Top 20 Scores of All Time")
