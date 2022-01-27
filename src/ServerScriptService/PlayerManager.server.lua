@@ -123,7 +123,7 @@ local function setupSessionData(player)
 		end
 		local hasSniperRifle = savedData["Has Sniper Rifle"]
 		if hasSniperRifle then
-			player:SetAttribute("HasSniperRifle", hasCrossbow)
+			player:SetAttribute("HasSniperRifle", hasSniperRifle)
 		end
 		-- Save to a player attribute so we can compare it for the global scores.
 		player:SetAttribute("SavedGold", goldValue.Value)
