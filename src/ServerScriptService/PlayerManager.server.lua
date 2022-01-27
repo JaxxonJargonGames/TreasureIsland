@@ -189,22 +189,24 @@ local function saveGlobal(player)
 	end
 end
 
-local function onSavepoint(player)
+local function saveInfo(player)
 	saveData(player)
 	saveGlobal(player)
+end
+
+local function onSavepoint(player)
+	saveInfo(player)
 	updateTopScores(player)
 end
 
 game.Players.PlayerRemoving:Connect(function(player)
-	saveData(player)
-	saveGlobal(player)
+	saveInfo(player)
 end)
 
 SavepointRemoteEvent.OnServerEvent:Connect(onSavepoint)
 
 game:BindToClose(function()
 	for _, player in pairs(game.Players:GetPlayers()) do
-		saveData(player)
-		saveGlobal(player)
-		end
+		coroutine.wrap(saveInfo)(player)
+	end
 end)
