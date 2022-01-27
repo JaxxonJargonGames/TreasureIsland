@@ -32,7 +32,6 @@ TopScoresRemoteEvent.OnClientEvent:Connect(function(topScores)
 	textLabel.Parent = script.Parent.TopScoresScrollingFrame
 	for rank, data in ipairs(topScores) do
 		local userId = data.key
-		print(rank, userId, Players:GetNameFromUserIdAsync(userId))
 		local horizontalFrame = Instance.new("Frame")
 		horizontalFrame.BackgroundTransparency = 1
 		horizontalFrame.Size = UDim2.new(0, 500, 0, 50)
