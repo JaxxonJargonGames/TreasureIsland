@@ -97,6 +97,8 @@ GoldFoundRemoteEvent.OnClientEvent:Connect(function(goldName)
 	local gold = workspace.Gold.Hidden:FindFirstChild(goldName)
 	gold.Transparency = 1
 	gold.CanCollide = false
+	gold.CanTouch = false
+	gold:FindFirstChildWhichIsA("ClickDetector"):Destroy()
 	gold.Parent = workspace.Gold.Found
 end)
 
