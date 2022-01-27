@@ -31,6 +31,8 @@ TopScoresRemoteEvent.OnClientEvent:Connect(function(topScores)
 	textLabel.TextXAlignment = Enum.TextXAlignment.Center
 	textLabel.Parent = script.Parent.TopScoresScrollingFrame
 	for rank, data in ipairs(topScores) do
+		local userId = data.key
+		print(rank, userId, Players:GetNameFromUserIdAsync(userId))
 		local horizontalFrame = Instance.new("Frame")
 		horizontalFrame.BackgroundTransparency = 1
 		horizontalFrame.Size = UDim2.new(0, 500, 0, 50)
@@ -39,7 +41,6 @@ TopScoresRemoteEvent.OnClientEvent:Connect(function(topScores)
 		horizontalListLayout.FillDirection = Enum.FillDirection.Horizontal
 		horizontalListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 		horizontalListLayout.Parent = horizontalFrame
-		local userId = data.key
 		local imageLabel = Instance.new("ImageLabel")
 		imageLabel.Image = Players:GetUserThumbnailAsync(userId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
 		imageLabel.Size = UDim2.new(0, 50, 0, 50)
