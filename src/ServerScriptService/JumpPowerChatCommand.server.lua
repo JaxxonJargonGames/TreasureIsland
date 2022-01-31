@@ -27,7 +27,6 @@ local function onPlayerChatted(player, message, recipient)
 end
 
 local function onPlayerAdded(player)
-	print("onPlayerAdded player:", player.UserId, "creator:", game.CreatorId)
 	if player.UserId == game.CreatorId then -- This command is available only to the game creator.
 		player.Chatted:Connect(function(...)
 			onPlayerChatted(player, ...)
