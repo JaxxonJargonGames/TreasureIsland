@@ -1,7 +1,7 @@
 local Players = game:GetService("Players")
 
 -- Command to choose a jump power (note the trailing space)
-local COMMAND = "/jumppower "
+local COMMAND = "/jp "
 
 local function hasMatchingCommandName(text, command)
 	-- Note: string.sub(message, ...) is the same as text:sub(...)
@@ -27,6 +27,7 @@ local function onPlayerChatted(player, message, recipient)
 end
 
 local function onPlayerAdded(player)
+	print("onPlayerAdded player:", player.UserId, "creator:", game.CreatorId)
 	if player.UserId == game.CreatorId then -- This command is available only to the game creator.
 		player.Chatted:Connect(function(...)
 			onPlayerChatted(player, ...)
