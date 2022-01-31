@@ -113,18 +113,9 @@ local function setupSessionData(player)
 				onGoldFound(player, goldName)
 			end
 		end
-		local hasCrossbow = savedData["Has Crossbow"]
-		if hasCrossbow then
-			player:SetAttribute("HasCrossbow", hasCrossbow)
-		end
-		local hasJumpingBoots = savedData["Has Jumping Boots"]
-		if hasJumpingBoots then
-			player:SetAttribute("HasJumpingBoots", hasJumpingBoots)
-		end
-		local hasSniperRifle = savedData["Has Sniper Rifle"]
-		if hasSniperRifle then
-			player:SetAttribute("HasSniperRifle", hasSniperRifle)
-		end
+		player:SetAttribute("HasCrossbow", savedData["Has Crossbow"])
+		player:SetAttribute("HasJumpingBoots", savedData["Has Jumping Boots"])
+		player:SetAttribute("HasSniperRifle", savedData["Has Sniper Rifle"])
 		-- Save to a player attribute so we can compare it for the global scores.
 		player:SetAttribute("SavedGold", goldValue.Value)
 	end
