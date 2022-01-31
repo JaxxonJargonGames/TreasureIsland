@@ -140,6 +140,7 @@ end
 
 local function onCharacterAdded(character, player)
 	local humanoid = character:WaitForChild("Humanoid")
+	humanoid.UseJumpPower = true
 	humanoid.Died:Connect(function()
 		onHumanoidDied(player)
 	end)
