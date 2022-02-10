@@ -10,14 +10,21 @@ local SniperRifleAddedRemoteEvent = ReplicatedStorage:WaitForChild("SniperRifleA
 
 local merchants = workspace:WaitForChild("Merchants"):GetChildren()
 local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
 
 local MerchandiseModule = require(ReplicatedStorage:WaitForChild("Merchandise"))
 
 local CROSSBOW_PRICE = MerchandiseModule.CROSSBOW_PRICE
 local JUMPING_BOOTS_PRICE = MerchandiseModule.JUMPING_BOOTS_PRICE
+local JUMPING_BOOTS_POWER = MerchandiseModule.JUMPING_BOOTS_POWER
 local SNIPER_RIFLE_PRICE = MerchandiseModule.SNIPER_RIFLE_PRICE
+
+local function setupJumpingBoots()
+	local hasJumpingBoots = player:GetAttribute("HasJumpingBoots") or nil
+	if hasJumpingBoots then
+		player.Character.Humanoid.JumpPower = JUMPING_BOOTS_POWER
+		player:SetAttribute("HasJumpingBoots", true)
+	end
+end
 
 local function setupCrossbow()
 	local hasCrossbow = player:GetAttribute("HasCrossbow") or nil
@@ -36,19 +43,10 @@ local function setupSniperRifle()
 end
 
 SetupMerchandiseRemoteEvent.OnClientEvent:Connect(function()
+	setupJumpingBoots()
 	setupCrossbow()
 	setupSniperRifle()
 end)
-
-local function setupJumpingBoots()
-	local hasJumpingBoots = player:GetAttribute("HasJumpingBoots") or nil
-	if hasJumpingBoots then
-		local purchase = false
-		JumpingBootsAddedRemoteEvent:FireServer(purchase)
-	end
-end
-
-setupJumpingBoots()
 
 local function getCoinSound()
 	local sound = Instance.new("Sound")

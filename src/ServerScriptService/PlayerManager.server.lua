@@ -64,8 +64,6 @@ JumpingBootsAddedRemoteEvent.OnServerEvent:Connect(function(player, purchase)
 	if purchase then
 		player.leaderstats.Gold.Value -= JUMPING_BOOTS_PRICE
 	end
-	player.Character.Humanoid.JumpPower = JUMPING_BOOTS_POWER
-	player:SetAttribute("HasJumpingBoots", true)
 end)
 
 SniperRifleAddedRemoteEvent.OnServerEvent:Connect(function(player, purchase)
