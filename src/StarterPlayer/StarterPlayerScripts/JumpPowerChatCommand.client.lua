@@ -15,6 +15,7 @@ local function getPowerFromMessage(message)
 end
 
 local function onPlayerChatted(player, message, recipient)
+	print("onPlayerChatted")
 	if hasMatchingCommandName(message, COMMAND) then
 		local character = player.Character or player.CharacterAdded:wait()
 		local power = getPowerFromMessage(message)
@@ -27,7 +28,7 @@ local function onPlayerChatted(player, message, recipient)
 end
 
 local function onPlayerAdded(player)
-	if player.UserId == game.CreatorId then -- This command is available only to the game creator.
+	if player.UserId == game.CreatorId or game.CreatorId == 0 then -- This command is available only to the game creator.
 		player.Chatted:Connect(function(...)
 			onPlayerChatted(player, ...)
 		end)
