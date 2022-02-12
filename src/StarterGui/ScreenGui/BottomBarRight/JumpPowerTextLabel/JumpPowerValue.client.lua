@@ -1,28 +1,17 @@
 local Players = game:GetService("Players")
 
 local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:wait()
+local humanoid = character:WaitForChild("Humanoid")
 
 local textLabel = script.Parent
 
-local function update(humanoid)
+local function update()
 	textLabel.Text = "Jump Power: " .. tostring(humanoid.JumpPower)
 end
 
-local function onCharacterAdded(character)
-	local humanoid = character:WaitForChild("Humanoid")
-	update(humanoid)
-	humanoid:GetPropertyChangedSignal("JumpPower"):Connect(function()
-		update(humanoid)
-	end)
-end
+update()
 
-local function onPlayerAdded(player)
-	player.CharacterAdded:Connect(function(character)
-		onCharacterAdded(character)
-	end)
-end
-
-for _, player in pairs(Players:GetPlayers()) do
-	onPlayerAdded(player)
-end
-Players.PlayerAdded:Connect(onPlayerAdded)
+humanoid:GetPropertyChangedSignal("JumpPower"):Connect(function()
+	update()
+end)
